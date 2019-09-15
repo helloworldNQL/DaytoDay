@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="demo">
+
+    </div>
+    <button onclick="getLocation()">获取地理定位</button>
+</body>
+<script>
+    var x = document.getElementById("demo");
+    //封装获取定位方法
+    function getLocation() {
+        //判断是否允许定位 
+        //getCurrentPosition() 方法的第二个参数用于处理错误。它规定当获取用户位置失败时运行的函数
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
+        } else {
+            x.innerHTML = '此浏览器不支持地理定位';
+        }
+    }
+    //显示经纬度（Latitude纬度/Longitude经度）
+    function showPosition(position) {
+        x.innerHTML = 'Latitude:' + position.coords.latitude +
+            '<br />Longitude:' + position.coords.longitude;
+    }
+    //显示错误
+    function showError(error) {
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                x.innerHTML = "用户拒绝地理定位的请求User denied the request for Geolocation."
+                break;
+            case error.POSITION_UNAVAILABLE:
+                x.innerHTML = "位置信息不可用"
+                break;
+            case error.TIMEOUT:
+                x.innerHTML = "获取用户位置的请求超时。"
+                break;
+            case error.UNKNOWN_ERROR:
+                x.innerHTML = "An unknown error occurred.发生一个未知的错误"
+                break;
+        }
+    }
+</script>
+
+</html>
